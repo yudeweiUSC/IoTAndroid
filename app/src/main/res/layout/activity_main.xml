@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/gpscoordinate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="86dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="GPS Coordinate"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/longitude"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/deviceid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Device ID"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/longitude"
+        app:layout_constraintTop_toBottomOf="@+id/gpscoordinate" />
+
+    <Button
+        android:id="@+id/buttonScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Scan barcode"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="59dp"
+        android:text="HTTP Post"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonGPS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonGPS" />
+
+    <Button
+        android:id="@+id/buttonGPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="63dp"
+        android:layout_marginBottom="87dp"
+        android:text="Get GPS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/longitude"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginBottom="27dp"
+        android:text="Longitude"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/deviceid"
+        app:layout_constraintEnd_toStartOf="@+id/latitude"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gpscoordinate" />
+
+    <TextView
+        android:id="@+id/latitude"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="48dp"
+        android:text="Latitude"
+        android:textSize="20dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/longitude"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/longitude" />
+
+    <TextView
+        android:id="@+id/deviceidvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Device ID"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/deviceid"
+        app:layout_constraintTop_toBottomOf="@+id/deviceid" />
+
+    <TextView
+        android:id="@+id/targetURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:text="TargetURL"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/deviceidvalue"
+        app:layout_constraintTop_toBottomOf="@+id/deviceidvalue" />
+
+    <EditText
+        android:id="@+id/thingsboardURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Thingsboard"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/deviceidvalue"
+        app:layout_constraintTop_toBottomOf="@+id/targetURL" />
+
+    <TextView
+        android:id="@+id/HTTPResponse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="200dp"
+        android:text="response"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/thingsboardURL"
+        app:layout_constraintTop_toBottomOf="@+id/thingsboardURL"  />
+
+</android.support.constraint.ConstraintLayout>
