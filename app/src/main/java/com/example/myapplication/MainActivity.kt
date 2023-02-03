@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             deviceIDText to "deviceID",
             latitudeText to "latitude",
             longitudeText to "longitude"
-        ).forEach {(s, p) ->
+        ).forEach { (s, p) ->
             s.text = pref.getString("Text${s.id}", p)
         }
 
