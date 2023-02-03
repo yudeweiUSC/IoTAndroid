@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var httpResponse: TextView
 
     data class ThingsBoardData (
-        var deviceID: String? = null,
+        var deviceID: String = "defaultId",
         var lat: Double = 0.0,
         var long: Double = 0.0)
 
@@ -49,13 +49,17 @@ class MainActivity : AppCompatActivity() {
         latitudeText = findViewById(R.id.latitude)
         deviceIDText = findViewById(R.id.deviceidvalue)
         thingsboardURL = findViewById(R.id.thingsboardURL)
-        httpResponse = findViewById(R.id.HTTPResponse)
+        httpResponse = findViewById(R.id.httpResponse)
 
         val pref = getSharedPreferences("data", MODE_PRIVATE)
-        thingsboardURL.text = pref.getString("thingsboardURL", "thingsboardURL")
-        deviceIDText.text = pref.getString("deviceID", "deviceID")
-        latitudeText.text = pref.getString("latitude", "latitude")
-        longitudeText.text = pref.getString("longitude", "longitude")
+        mapOf(
+            thingsboardURL to "thingsboardURL",
+            deviceIDText to "deviceID",
+            latitudeText to "latitude",
+            longitudeText to "longitude"
+        ).forEach {(s, p) ->
+            s.text = pref.getString("Text${s.id}", p)
+        }
 
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -83,18 +87,22 @@ class MainActivity : AppCompatActivity() {
         btnGetGPS.setOnClickListener {
             location?.let {
                 locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                longitudeText.text = location.longitude.toString()
-                latitudeText.text = location.latitude.toString()
+                longitudeText.text = it.longitude.toString()
+                latitudeText.text = it.latitude.toString()
             }
         }
 
         btnScan.setOnClickListener {
             val intent = Intent(applicationContext, CaptureActivity::class.java)
             intent.action = "com.google.zxing.client.android.SCAN"
-            intent.putExtra("SAVE_HISTORY", false)
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE")
-            intent.putExtra("PROMPT_MESSAGE", "Scan QR code for IoT")
-            intent.putExtra("BEEP_ENABLED", false)
+            mapOf(
+                "SAVE_HISTORY" to false,
+                "SCAN_MODE" to "QR_CODE_MODE",
+                "PROMPT_MESSAGE" to "Scan QR code for IoT",
+                "BEEP_ENABLED" to false
+            ).forEach { (s, p) ->
+                intent.putExtra(s, p)
+            }
             startActivityForResult(intent, requestCodeForQRCode)
         }
 
@@ -104,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                 latitudeText.text.toString().toDoubleOrNull() ?: 0.0,
                 longitudeText.text.toString().toDoubleOrNull() ?: 0.0
             ))
-            httpResponse.text = payload
+            httpResponse.text = "posting: $payload"
             val postURL = thingsboardURL.text.toString()
             if (!URLUtil.isValidUrl(postURL)) {
                 httpResponse.text = "invalid URL"
@@ -114,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), payload)
             val request = Request.Builder()
                 .method("POST", requestBody)
-                .url(thingsboardURL.text.toString())
+                .url(postURL)
                 .addHeader("Content-Type", "application/json")
                 .build()
             okHttpClient.newCall(request).enqueue(object : Callback {
@@ -145,10 +153,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         val editor = getSharedPreferences("data", MODE_PRIVATE).edit()
-        editor.putString("thingsboardURL", thingsboardURL.text.toString())
-        editor.putString("deviceID", deviceIDText.text.toString())
-        editor.putString("latitude", latitudeText.text.toString())
-        editor.putString("longitude", longitudeText.text.toString())
+        arrayOf(thingsboardURL, deviceIDText, latitudeText, longitudeText). forEach {
+            editor.putString("Text${it.id}", it.text.toString())
+        }
         editor.apply()
     }
 
