@@ -11,6 +11,7 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.TextView
 import com.google.gson.Gson
@@ -51,7 +52,10 @@ class MainActivity : AppCompatActivity() {
         httpResponse = findViewById(R.id.HTTPResponse)
 
         val pref = getSharedPreferences("data", MODE_PRIVATE)
-        thingsboardURL.text = pref.getString("URL", "thingsboardURL")
+        thingsboardURL.text = pref.getString("thingsboardURL", "thingsboardURL")
+        deviceIDText.text = pref.getString("deviceID", "deviceID")
+        latitudeText.text = pref.getString("latitude", "latitude")
+        longitudeText.text = pref.getString("longitude", "longitude")
 
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -95,14 +99,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnHttpPost.setOnClickListener {
-            val payload = ThingsBoardData(
+            val payload = Gson().toJson(ThingsBoardData(
                 deviceIDText.text.toString(),
                 latitudeText.text.toString().toDoubleOrNull() ?: 0.0,
                 longitudeText.text.toString().toDoubleOrNull() ?: 0.0
-            )
-
+            ))
+            httpResponse.text = payload
+            val postURL = thingsboardURL.text.toString()
+            if (!URLUtil.isValidUrl(postURL)) {
+                httpResponse.text = "invalid URL"
+                return@setOnClickListener
+            }
             val okHttpClient = OkHttpClient()
-            val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), Gson().toJson(payload))
+            val requestBody: RequestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), payload)
             val request = Request.Builder()
                 .method("POST", requestBody)
                 .url(thingsboardURL.text.toString())
@@ -136,7 +145,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         val editor = getSharedPreferences("data", MODE_PRIVATE).edit()
-        editor.putString("URL", thingsboardURL.text.toString())
+        editor.putString("thingsboardURL", thingsboardURL.text.toString())
+        editor.putString("deviceID", deviceIDText.text.toString())
+        editor.putString("latitude", latitudeText.text.toString())
+        editor.putString("longitude", longitudeText.text.toString())
         editor.apply()
     }
 

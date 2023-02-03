@@ -10,12 +10,12 @@
         android:id="@+id/gpscoordinate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="160dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="GPS Coordinate"
-        android:textColor="@color/black"
         android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/longitude"
         app:layout_constraintStart_toStartOf="@+id/longitude"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,71 +24,72 @@
         android:id="@+id/deviceid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Device ID"
-        android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="@+id/longitude"
-        app:layout_constraintTop_toBottomOf="@+id/gpscoordinate" />
+        app:layout_constraintTop_toBottomOf="@+id/longitude" />
 
     <Button
         android:id="@+id/buttonScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
-        android:text="Scan barcode"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPost"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="33dp"
+        android:text="Scan QRcode"
+        app:layout_constraintBottom_toTopOf="@+id/thingsboardURL"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/longitude"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="59dp"
+        android:layout_marginBottom="86dp"
         android:text="HTTP Post"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonGPS"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonGPS" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deviceidvalue"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/buttonGPS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="63dp"
-        android:layout_marginBottom="87dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="8dp"
         android:text="Get GPS"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/longitude"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginBottom="27dp"
-        android:text="Longitude"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/deviceid"
-        app:layout_constraintEnd_toStartOf="@+id/latitude"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gpscoordinate" />
-
-    <TextView
-        android:id="@+id/latitude"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="48dp"
-        android:text="Latitude"
-        android:textSize="20dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/longitude"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/longitude"
         app:layout_constraintStart_toEndOf="@+id/longitude" />
 
-    <TextView
+    <EditText
+        android:id="@+id/longitude"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginBottom="54dp"
+        android:text="Longitude"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/latitude"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gpscoordinate" />
+
+    <EditText
+        android:id="@+id/latitude"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="54dp"
+        android:text="Latitude"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/longitude"
+        app:layout_constraintTop_toBottomOf="@+id/gpscoordinate" />
+
+    <EditText
         android:id="@+id/deviceidvalue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,9 +104,7 @@
         android:id="@+id/targetURL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
         android:text="TargetURL"
-        android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="@+id/deviceidvalue"
         app:layout_constraintTop_toBottomOf="@+id/deviceidvalue" />
@@ -115,9 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
         android:text="Thingsboard"
-        android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="@+id/deviceidvalue"
         app:layout_constraintTop_toBottomOf="@+id/targetURL" />
@@ -126,10 +123,11 @@
         android:id="@+id/HTTPResponse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="432dp"
         android:width="200dp"
         android:text="response"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="@+id/thingsboardURL"
-        app:layout_constraintTop_toBottomOf="@+id/thingsboardURL"  />
+        app:layout_constraintTop_toBottomOf="@+id/thingsboardURL" />
 
 </android.support.constraint.ConstraintLayout>
